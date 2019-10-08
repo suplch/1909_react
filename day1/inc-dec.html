@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./lib/react.development.js"></script>
+    <script src="./lib/react-dom.development.js"></script>
+    <script src="./lib/babel.min.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<script type="text/babel">
+    class Counter extends React.Component {
+        constructor(props) {
+            super(props);
+            // 方法绑定 this 指针
+            this.inc = this.inc.bind(this);
+            this.dec = this.dec.bind(this);
+            this.state = {
+                count: 0
+            }
+        }
+        inc() { // 修改数据模型 count + 1
+            this.setState({
+                count: this.state.count + 1
+            })
+        }
+        dec() { // 修改数据模型 count - 1
+            this.setState({
+                count: this.state.count - 1
+            })
+        }
+        render() {
+            return (
+                <div>
+                    <button onClick={ () => { this.dec() }  }>
+                        -, 方法一
+                    </button>
+                    {this.state.count}
+                    <button onClick={ () => { this.inc() }  }>
+                        +, 方法一
+                    </button>
+                    <hr/>
+                    <button onClick={ this.dec.bind(this) }>
+                        -, 方法二
+                    </button>
+                    {this.state.count}
+                    <button onClick={ this.inc.bind(this) }>
+                        +, 方法二
+                    </button>
+                    <hr/>
+                    <button onClick={ this.dec }>
+                        -, 方法三
+                    </button>
+                    {this.state.count}
+                    <button onClick={ this.inc }>
+                        +, 方法三
+                    </button>
+                </div>
+            );
+        }
+    }
+    ReactDOM.render(<Counter/>, document.getElementById('app'));
+</script>
+</body>
+</html>

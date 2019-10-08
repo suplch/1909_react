@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./lib/react.development.js"></script>
+    <script src="./lib/react-dom.development.js"></script>
+    <script src="./lib/babel.min.js"></script>
+</head>
+<body>
+<div id="app"></div>
+
+<script type="text/babel">
+    let students = [
+        {id: '1111', name: '张三', age: 18},
+        {id: '2222', name: '李四', age: 28},
+        {id: '3333', name: '王五', age: 38},
+    ];
+
+    // 方法一
+    // let lis = [];
+    // for (let student of students) {
+    //     // <li>{student.name}</li>
+    //     lis.push(<li key={student.id}>{student.name}</li>);
+    //     //lis.push(React.createElement('li', {key: student.id}, student.name));
+    // }
+
+    // 方法二
+    let lis = students.map((student, index) => {
+        return <li key={student.id}>
+            {student.name}
+        </li>
+    });
+
+
+    ReactDOM.render(
+        <ul>
+            {lis}
+        </ul>,
+        document.getElementById('app')
+    );
+
+
+
+</script>
+</body>
+</html>

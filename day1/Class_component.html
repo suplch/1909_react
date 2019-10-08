@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./lib/react.development.js"></script>
+    <script src="./lib/react-dom.development.js"></script>
+    <script src="./lib/babel.min.js"></script>
+</head>
+<body>
+<div id="app"></div>
+
+<script type="text/babel">
+
+    class Hello extends React.Component {
+        constructor(props) {
+            super(props);
+            console.log(props);
+
+            this.state = {
+                time: new Date().toLocaleString()
+            };
+
+            setInterval(() => {
+                // this.state.time = new Date().toLocaleString();
+                // 每个一秒钟 更新 state time 属性
+                this.setState({
+                    time: new Date().toLocaleString()
+                })
+            }, 1000);
+        }
+
+        render() {
+            return (
+                <div>
+                    Hello {this.props.name}!!!,
+                    现在时刻: {this.state.time}
+                </div>
+            );
+        }
+    }
+
+    ReactDOM.render(
+        <Hello name={'张三'}/>,
+        document.getElementById('app'));
+
+</script>
+</body>
+</html>

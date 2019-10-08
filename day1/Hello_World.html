@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./lib/react.development.js"></script>
+    <script src="./lib/react-dom.development.js"></script>
+    <script src="./lib/babel.min.js"></script>
+    <style>
+        .hellobox {
+            border: solid 5px red;
+        }
+    </style>
+</head>
+<body>
+<div id="app"></div>
+
+<script type="text/babel">
+    // 例5
+    function Hello(props) {
+        console.log(props);
+        return (
+            <div className="hellobox">
+                Hello {props.name},
+                性别: {props.sex},
+                年龄: {props.age} !!!!!!!
+                <table border="1">
+                    <tbody>
+                    <tr>
+                        <td style={  {border: 'solid 5px green', fontSize: '48px'}  }>
+                            {props.children}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        );
+    }
+    ReactDOM.render(
+        <Hello name="张三" sex="男" age="18">
+            <hr/>
+            你好
+            <ul>
+                <li>JavaScript</li>
+                <li>Html</li>
+            </ul>
+            再见
+        </Hello>,
+        document.getElementById('app'));
+
+
+    // 例4
+    // function Hello() {
+    //     return <div>Hello World!!!!!!!!!</div>
+    // }
+    // //const hello = <Hello/>;
+    // //ReactDOM.render(hello, document.getElementById('app'));
+    // ReactDOM.render(<Hello/>, document.getElementById('app'));
+
+    // 例3
+    // function Hello() {
+    //     return <div>Hello World!!!!!</div>
+    // }
+    // const hello = Hello();
+    // ReactDOM.render(hello, document.getElementById('app'));
+
+
+    // 例2
+    // const hello = <div>Hello World!!!!</div>;
+    // ReactDOM.render(hello, document.getElementById('app'));
+
+    // 例1
+    // ReactDOM.render(
+    //     <div>Hello World!!!</div>,
+    //     document.getElementById('app')
+    // );
+</script>
+</body>
+</html>

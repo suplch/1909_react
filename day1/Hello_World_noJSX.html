@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./lib/react.development.js"></script>
+    <script src="./lib/react-dom.development.js"></script>
+    <script src="./lib/babel.min.js"></script>
+    <style>
+        .box {
+            border: solid 5px green;
+        }
+    </style>
+</head>
+<body>
+<div id="app"></div>
+
+<script type="text/babel">
+    // 定义一个 Hello 组件, props 表示外部传递的参数
+    function Hello(props) {
+        console.log(props);
+        return (
+            <div className="box">
+                {/* 给按钮绑定一个点击事件 */}
+                <button onClick={props.clk}>Hello</button>
+                {props.name}, 年龄: { props.age + 1 }
+                <hr/>
+                {props.address}
+                <ul style={ {border: 'solid 5px red'} }>
+                    <li>JavaScript</li>
+                    <li>Html</li>
+                </ul>
+                {/* children 表示组件的 innerHTML 部分的内容 */}
+                {props.children}
+            </div>
+        );
+    }
+    //const 张三 = '张三';
+
+    // let address = '深圳';
+    // address 保持一个表格对象
+    let address = <table border="1">
+        <tbody>
+            <tr>
+                <td>深圳</td>
+                <td>西部硅谷</td>
+            </tr>
+        </tbody>
+    </table>;
+        let clk = function () {
+            alert('hello 你好!!!!!!');
+        };
+    //const hello = Hello({name: '张三', age: 18, address, clk, children: <div style={  {border: 'solid 5px blue'}   }><button>确定</button></div>});
+    // <Hello/> 相当于 调用 Hello() 函数  属性可以传递任何数据类型
+    const hello = <Hello name={"张三"} age={18} address={address} clk={clk} >
+        <div style={  {border: 'solid 5px blue'}   }>
+            <button>确定</button>
+        </div>
+    </Hello>;
+
+    // JSX 语法最终会被 babel 翻译为下列代码
+    // const hello = React.createElement('div', {className: 'box'}, [
+    //     'Hello World',
+    //     React.createElement('ul', {style: {border: 'solid 5px red'}}, [
+    //         React.createElement('li', null, 'JavaScript'),
+    //         React.createElement('li', null, 'Html'),
+    //     ])
+    // ]);
+
+    console.log(hello);
+
+    ReactDOM.render(hello, document.getElementById('app'));
+</script>
+</body>
+</html>
