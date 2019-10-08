@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./lib/react.development.js"></script>
+    <script src="./lib/react-dom.development.js"></script>
+    <script src="./lib/babel.min.js"></script>
+    <style>
+        .line {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+<div id="app"></div>
+
+<script type="text/babel">
+
+    class TodoList extends React.Component {
+        constructor(props) {
+            super(props);
+
+            // 创建一个 ref 引用, 用来 表示一个具体的html元素
+            this.inputRef = React.createRef();
+
+            this.state = {
+                todos: [
+                    {task: '背面试题', done: true},
+                    {task: '上课', done: false},
+                    {task: '吃饭', done: false},
+                ]
+            }
+        }
+
+        addTask() {
+            alert('test');
+            let task = this.inputRef.current.value;
+            // 添加最新的 task
+            this.setState({
+                todos: [...this.state.todos, {task, done: false}]
+            });
+            // 清除 文本框
+            this.inputRef.current.value = '';
+        }
+
+        changeDone(todo, event) {
+            console.log(event.target.checked);
+            // 返回 新 todos 数组, 将用户点击的todo done属性 设置为 input checked
+            const todos = this.state.todos.map((todoItem) => {
+                if (todo === todoItem) {
+                    return {task: todoItem.task, done: event.target.checked}
+                } else {
+                    return todoItem
+                }
+            });
+            this.setState({
+                todos: todos
+            })
+        }
+
+        render() {
+            // 统计 已完成的数量
+            let doneCount = 0;
+            let lis = this.state.todos.map((todo, index) => {
+                if (todo.done) {
+                    doneCount++;
+                }
+                return (
+                    <li key={index} className={todo.done ? 'line': ''}>
+                        {todo.task} -- {String(todo.done)}
+                        <input
+                            type="checkbox"
+                            checked={todo.done}
+                            onChange={  (event) => { this.changeDone(todo, event) }  } />
+                    </li>
+                );
+            });
+            return (
+                <div>
+                    {/* ref 属性指定一个 ref 对象 */}
+                    <input ref={this.inputRef} type="text"/>
+                    <button onClick={ this.addTask.bind(this)  }>添加</button>
+                    <ul>
+                        {lis}
+                    </ul>
+                    一共 {lis.length} 条任务, 已经完成 {doneCount}  未完成 {lis.length - doneCount}
+                </div>
+            );
+        }
+    }
+    ReactDOM.render(<TodoList/>, document.getElementById('app'));
+</script>
+</body>
+</html>
