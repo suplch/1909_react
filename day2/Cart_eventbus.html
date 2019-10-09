@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./lib/react.development.js"></script>
+    <script src="./lib/react-dom.development.js"></script>
+    <script src="./lib/babel.min.js"></script>
+    <script>
+        class EventBus {
+            constructor() {
+                this.handlerSlot = {};
+            }
+            // 监听一个 eventName 指定的事件
+            $on(eventName, handler){
+                let handlers = this.handlerSlot[eventName];
+                if (!handlers) {
+                    handlers = [];
+                    this.handlerSlot[eventName] = handlers;
+                }
+                handlers.push(handler);
+                return {
+                    cancel() {
+                        let position = handlers.indexOf(handler);
+                        handlers.splice(position, 1);
+                    }
+                }
+            }
+            // 广播一个eventName 指定的事件
+            $emit(eventName, data) {
+                let handlers = this.handlerSlot[eventName];
+                if (handlers) {
+                    for (let handler of handlers) {
+                        handler(data);
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="app"></div>
+<script type="text/babel">
+    // 声明一个全局 eventbus 对象
+    let eventBus = new EventBus();
+    class ProductList extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                products: [
+                    {id: '111', name: '鼠标', price: 100},
+                    {id: '222', name: '键盘', price: 200},
+                ]
+            }
+        }
+        render() {
+            const {products} = this.state;
+            const lis = products.map((product) => {
+                return (
+                    <li key={product.id}>
+                        {product.name}
+                        <button onClick={ () => { eventBus.$emit('add_product_cart', product) } }>
+                            添加购物车
+                        </button>
+                    </li>
+                );
+            });
+            return (
+                <div style={ {border: 'solid 5px green', margin: '5px'} }>
+                    产品列表:
+                    <ul>
+                        {lis}
+                    </ul>
+                </div>
+            );
+        }
+    }
+    class Cart extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = { cart: {items: []} };
+            this.handler = eventBus.$on('add_product_cart', (product) => { //  监听 add_product_cart 事件
+                this.addToCart(product);
+            })
+        }
+        addToCart(product) {
+            let exist = false;
+            const items = this.state.cart.items.map((item) => {
+                if (item.id === product.id) {
+                    exist = true;
+                    return {...item, count: item.count + 1};
+                } else {
+                    return item;
+                }
+            });
+            if (!exist) {
+                items.push({ ...product, count: 1 });
+            }
+            this.setState({ cart: {items} } )
+        }
+
+        componentWillUnmount() {
+            this.handler.cancel();
+        }
+        render() {
+            const lis = this.state.cart.items.map((item) => {
+                return (
+                    <li key={item.id}>
+                        {item.name}, 单价: {item.price}, 数量: {item.count}
+                    </li>
+                );
+            });
+            return (
+                <div style={ {border: 'solid 5px red', margin: '5px'} }>
+                    购物车:
+                    <ul>
+                        {lis}
+                    </ul>
+                </div>
+            );
+        }
+    }
+
+    class Shop extends React.Component {
+        render() {
+            return (
+                <div style={ {border: 'solid 5px blue', margin: '5px'} }>
+                    商店:
+                    <ProductList/>
+                    <Cart/>
+                </div>
+            );
+        }
+    }
+
+    ReactDOM.render(<Shop/>, document.getElementById('app'))
+
+
+    // let eventBus = new EventBus();
+    //
+    // eventBus.$on('我饿了', function (data) {
+    //     console.log('我要吃' + data);
+    // });
+    //
+    // eventBus.$on('我饿了', function (data) {
+    //     console.log('我不喜欢吃' + data);
+    // });
+    //
+    //
+    // eventBus.$emit('我饿了', '🍚');
+    //
+    // eventBus.$emit('我饿了', '🍌');
+
+</script>
+</body>
+</html>

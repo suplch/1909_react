@@ -13,11 +13,8 @@
 <script type="text/babel">
     class ProductList extends React.Component {
         addToCart(product) {
-            console.log('add cart')
-            this.props.onAddToCart({
-                data: {
-                    product
-                }
+            this.props.onAddToCart({ // 调用父组件传递 的 onAddToCart 回调函数
+                data: { product }
             })
         }
         render() {
@@ -26,7 +23,9 @@
                 return (
                     <li key={product.id}>
                         {product.name}
-                        <button onClick={ () => { this.addToCart(product) } }>添加购物车</button>
+                        <button onClick={ () => { this.addToCart(product) } }>
+                            添加购物车
+                        </button>
                     </li>
                 );
             });
@@ -42,9 +41,7 @@
     }
     class Cart extends React.Component {
         addCount(pid, n) {
-            this.props.onAddCount({
-                data: {pid, n}
-            });
+            this.props.onAddCount({ data: {pid, n} }); //调用父组件传递的onAddCount 回调函数
         }
         render() {
             const {cart} = this.props;
@@ -59,7 +56,6 @@
                     </li>
                 );
             });
-
             return (
                 <div style={ {border: 'solid 5px blue', margin: '5px'} }>
                     购物车:
@@ -70,7 +66,6 @@
             );
         }
     }
-
     class Shop extends React.Component {
         constructor(props) {
             super(props);
@@ -79,9 +74,7 @@
                     {id: '111', name: '鼠标', price: 100},
                     {id: '222', name: '键盘', price: 200},
                 ],
-                cart: {
-                    items: []
-                }
+                cart: { items: [] }
             }
         }
         addToCart(product) {
@@ -95,19 +88,11 @@
                 }
             });
             if (!exist) {
-                items.push({
-                    ...product,
-                    count: 1
-                });
+                items.push({ ...product, count: 1 });
             }
-            this.setState({
-                cart: {
-                    items
-                }
-            })
+            this.setState({ cart: {items} } )
         }
         addCartItemCount(pid, n) {
-            console.log(pid, n)
             const items = this.state.cart.items.map((item) => {
                 if (item.id === pid) {
                     return {...item, count: item.count + n}
@@ -115,19 +100,17 @@
                     return item;
                 }
             });
-            this.setState({
-                cart: {
-                    items
-                }
-            })
+            this.setState({ cart: {items} } )
         }
         render() {
             const {products, cart} = this.state;
             return (
                 <div style={ {border: 'solid 5px red', margin: '5px'} }>
                     商店
-                    <ProductList products={products} onAddToCart={ (event) => { this.addToCart(event.data.product) } } />
-                    <Cart cart={cart} onAddCount={ (event) => { this.addCartItemCount(event.data.pid, event.data.n) } } />
+                    <ProductList products={products}
+                                 onAddToCart={ (event) => { this.addToCart(event.data.product) } } />
+                    <Cart cart={cart}
+                          onAddCount={(event)=>{ this.addCartItemCount(event.data.pid, event.data.n) } } />
                 </div>
             );
         }
