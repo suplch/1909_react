@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./lib/react.development.js"></script>
+    <script src="./lib/react-dom.development.js"></script>
+    <script src="./lib/babel.min.js"></script>
+</head>
+<body>
+<div id="app"></div>
+
+<script type="text/babel">
+
+    class Child extends React.Component {
+        constructor(props) {
+            super(props)
+            console.log(props);
+        }
+
+        noMoney() {
+            // 调用 父组件 传递过来的 回调函数
+            this.props.onNoMoney();
+        }
+
+        render() {
+            let {money} = this.props;
+            return (
+                <div style={ {border: 'solid 5px red', margin: '5px'} }>
+                    Child 来自 父组件的 {money},
+                    <button onClick={ () => {this.noMoney()} }>爸, 没钱了</button>
+                </div>
+            );
+        }
+    }
+
+    class Father extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                money: 10000
+            }
+        }
+
+        hardWord() {
+
+            this.setState({
+                money: this.state.money + 1000
+            });
+        }
+
+        sonNoMoney() {
+            alert('儿子 没有钱了');
+            this.hardWord();
+        }
+
+        render() {
+            let money = this.state.money;
+            return (
+                <div style={ {border: 'solid 5px green', margin: '5px'} }>
+                    Father 有 {money} 元,
+                    <button onClick={ () => { this.hardWord() } }>努力工作</button>
+                    {/* 传递一个 money 数字类型的属性,  传递 一个 onNoMoney 回调函数 */}
+                    <Child money={money / 2} onNoMoney={ () => {this.sonNoMoney()} } />
+                </div>
+            );
+        }
+    }
+
+    ReactDOM.render(<Father/>, document.getElementById('app'));
+
+</script>
+</body>
+</html>

@@ -19,21 +19,22 @@
     // 例5
     function Hello(props) {
         console.log(props);
+
         return (
             <div className="hellobox">
-                Hello {props.name},
-                性别: {props.sex},
-                年龄: {props.age} !!!!!!!
-                <table border="1">
-                    <tbody>
-                    <tr>
-                        <td style={  {border: 'solid 5px green', fontSize: '48px'}  }>
-                            {props.children}
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+            Hello {props.name},
+        性别: {props.sex},
+        年龄: {props.age} !!!!!!!
+            <table border="1">
+                <tbody>
+                <tr>
+                    <td style={  {border: 'solid 5px green', fontSize: '48px'}  }>
+                        {props.children}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
         );
     }
     ReactDOM.render(
