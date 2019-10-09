@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./lib/react.development.js"></script>
+    <script src="./lib/react-dom.development.js"></script>
+    <script src="./lib/babel.min.js"></script>
+</head>
+<body>
+<div id="app"></div>
+
+<script type="text/babel">
+    // 创建一个上下文对象
+    const MyContext = React.createContext('默认值');
+    // 结构出一个 生产者组件, 和消费者组件
+    const {Provider, Consumer} = MyContext;
+
+    class Grandpa extends React.Component {
+        // 告诉当前组件类, 感知 MyContext 上下文数据
+        static contextType = MyContext;
+
+        constructor(props) {
+            super(props);
+
+            this.state = {
+                message: 'welcome',
+            }
+        }
+
+        changeMsg() {
+            this.setState({
+                message: 'welcome ' + Date().toLocaleString()
+            });
+        }
+
+        render() {
+            console.log(this);
+            return (
+                <div style={ {border: 'solid 5px red', margin: '5px'} }>
+                    Grandpa 上下文数据: {this.context}
+                    <input value={this.state.message}
+                           onChange={ (event)=>{ this.setState({message: event.target.value})} } />
+                    {/* 生产者组件提供数据 供子组件使用  */}
+                    <Provider value={
+                        {message: this.state.message, changeMsg: this.changeMsg.bind(this)}
+                    }>
+
+                        <Father/>
+                    </Provider>
+
+                </div>
+            );
+        }
+    }
+
+    class Father extends React.Component {
+        // 告诉当前组件类, 感知 MyContext 上下文数据
+        static contextType = MyContext;
+
+        render() {
+            console.log(this.context);
+            return (
+                <div style={ {border: 'solid 5px green', margin: '5px'} }>
+                    Father 上下文数据: {this.context.message}
+                    <hr/>
+                    {/* 消费者组件, 接受 生产者组件生产的数据 */}
+                    <Consumer>
+                        {
+                            (value) => {
+                                return <button>{value.message}</button>
+                            }
+                        }
+                    </Consumer>
+                    <Son/>
+                </div>
+            );
+        }
+    }
+
+    class Son extends React.Component {
+        // 告诉当前组件类, 感知 MyContext 上下文数据
+        static contextType = MyContext;
+        render() {
+            console.log(this);
+            return (
+                <div style={ {border: 'solid 5px blue', margin: '5px'} }>
+                    Son 上下文数据: {this.context.message}
+                    <hr/>
+                    {/* 消费者组件, 接受 生产者组件生产的数据 */}
+                    <Consumer>
+                        {
+                            (value) => {
+                                return (
+                                    <button
+                                        onClick={()=>{ value.changeMsg() } }>
+                                        {value.message}
+                                    </button>
+                                );
+                            }
+                        }
+                    </Consumer>
+                </div>
+            );
+        }
+    }
+    ReactDOM.render(<Grandpa/>, document.getElementById('app'));
+
+</script>
+</body>
+</html>

@@ -98,8 +98,7 @@
             }
             this.setState({ cart: {items} } )
         }
-
-        componentWillUnmount() {
+        componentWillUnmount() {  // 当组件被卸载的时候 取消 eventbus 事件监听
             this.handler.cancel();
         }
         render() {
@@ -120,7 +119,6 @@
             );
         }
     }
-
     class Shop extends React.Component {
         render() {
             return (
@@ -132,7 +130,6 @@
             );
         }
     }
-
     ReactDOM.render(<Shop/>, document.getElementById('app'))
 
 
