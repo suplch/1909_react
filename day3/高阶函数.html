@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+高阶函数演示
+<script >
+    function welcome(name, place) {
+        return '欢迎 ' + name + ' 来' + place +  '参观访问!!!';
+    }
+    let ret = welcome('特朗普', '深圳');
+
+    console.log(ret);
+
+
+    // function welcome_telangpu(place) {
+    //     return welcome('特朗普', place)
+    // }
+    //
+    // function welcome_pujing(place) {
+    //     return welcome('普京', place)
+    // }
+
+    function create_welcome(name) {
+        return function (place) {
+            return function (title) {
+                return '欢迎 ' + name + title + ' 来' + place +  '参观访问!!!';
+            }
+        }
+    }
+
+    let welcome_telangpu = create_welcome('特朗普');
+
+    let welcome_pujing = create_welcome('普京');
+
+    ret  = welcome_telangpu('深圳')('美国总统')
+
+    console.log(ret);
+
+    ret  = welcome_pujing('深圳')('俄罗斯')
+    console.log(ret);
+
+</script>
+</body>
+</html>
