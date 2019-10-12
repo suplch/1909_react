@@ -15,6 +15,13 @@ export default class LifeCycle extends React.Component {
             hobbies:hobbies
         })
     }
+
+    inc() {
+        this.setState({
+            count: this.state.count + 1
+        })
+    }
+
     // 当 props 和 state 发生变化的时候 调用, 返回值 作为最终的state合并到组件中.
     // static getDerivedStateFromProps(nextProps, prevState){
     //     console.log('有最新的属性了');
@@ -22,11 +29,7 @@ export default class LifeCycle extends React.Component {
     //     return prevState;
     // }
 
-    inc() {
-        this.setState({
-            count: this.state.count + 1
-        })
-    }
+
     // 是否需要组件进行更新 如果返回 true 组件将 调用 render 方法镜像更新
     // shouldComponentUpdate(nextProps, nextState) {
     //     if (this.props.time === nextProps.time) {
