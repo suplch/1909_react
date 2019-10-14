@@ -31,6 +31,7 @@ export class ProductDetail extends React.Component{
             loadingEl = <div>加载中 请稍后... </div>
         }
         let detailEl;
+        // 如果已经 加载了, 且 detail 有效 显示产品数据
         if (loaded && detail) {
             detailEl = (
                 <div>
@@ -39,6 +40,7 @@ export class ProductDetail extends React.Component{
                 </div>
             )
         }
+        // 如果已经 加载了, 且 detail 无效 说明没有产品数据
         if (loaded && !detail) {
             detailEl = <div>数据未找到</div>
         }

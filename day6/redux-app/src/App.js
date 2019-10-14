@@ -7,6 +7,9 @@ import {Login} from './views/Login';
 import {Home} from './views/Home';
 import { Products } from './views/Products';
 import { ProductDetail } from './views/ProductDetail'
+import { About} from './views/About'
+
+import { MyRoute } from './components/MyRoute'
 
 class App extends React.Component{
 
@@ -20,7 +23,9 @@ class App extends React.Component{
                 {/* Link 组件用来表示一个 连接地址  */}
                 <Link to={'/home'}>首页</Link>
                 <Link to={'/storetest'}>状态管理测试</Link>&nbsp;
-                <Link to={'/login'}>去登录</Link>
+                <Link to={'/login'}>去登录</Link>&nbsp;
+                <Link to={'/about'}>关于</Link>&nbsp;
+                <Link to={'/myabout'}>我的关于</Link>&nbsp;
                 {/* Switch 组件用来 选择一个 Route 路由 */}
                 <Switch>
                     {/* 重定向组件 当用户访问 / 根目录的时候 自动跳转 到 /home */}
@@ -32,10 +37,21 @@ class App extends React.Component{
                     <Route path={'/products'} exact component={Products} />
                     {/* 定义 路由 携带 id 参数 */}
                     <Route path={'/product_detail/:id'} exact component={ProductDetail} />
+                    <Route path={'/about'} component={About} />
                 </Switch>
+
+                <MyRoute path={'/myabout'} component={MyRouteTest}  />
+
             </HashRouter>
 
         );
     }
 }
+
+function MyRouteTest() {
+    return (
+        <div style={{border: 'solid 5px orange'}}>my route test</div>
+    )
+}
+
 export default App;

@@ -11,7 +11,6 @@ export class Products extends React.Component{
                 {id: '111', name: '电脑', price: 10000},
                 {id: '222', name: '鼠标', price: 99},
                 {id: '333', name: '键盘', price: 200},
-
             ]
         }
     }
