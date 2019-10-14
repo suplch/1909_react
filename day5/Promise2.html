@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+<body>
+
+<script>
+/*
+    function getUserInfo() {
+        return new Promise(function (resolve, reject) {
+
+            //resolve('hello');
+            reject(new Error('some error'))
+        })
+    }
+
+    getUserInfo().then(function (result) {
+        console.log(result)
+    }).catch(function (error) {
+        console.log(error)
+    }).finally(function () {
+        console.log('结束')
+    });
+    */
+
+
+    //let p1 = Promise.resolve('hello');
+/*
+    let p1 = new Promise(function (resolve) {
+        resolve('hello')
+    });
+
+    p1.then(function (result) {
+        console.log(result)
+    }).catch(function (error) {
+        console.log(error)
+    });
+
+    let p2 = Promise.reject(new Error('some error'))
+
+    p2.then(function () {
+
+    }).catch(function (error) {
+        console.log(error)
+    })
+    */
+
+/*
+var promise1 = Promise.resolve(3);
+var promise2 = 42;
+var promise3 = new Promise(function(resolve, reject) {
+    setTimeout(resolve, 3000, 'foo');
+});
+var promise4 = new Promise(function(resolve, reject) {
+    setTimeout(resolve, 5000, 'bar');
+});
+
+var promise5 = new Promise(function(resolve, reject) {
+    setTimeout(reject, 5000, new Error('some error'));
+});
+
+
+Promise.all([promise1, promise2, promise3, promise4, promise5]).then(function(values) {
+    console.log(values);
+}).catch(function (error) {
+    console.log(error.message)
+});
+*/
+
+
+const promise1 = Promise.resolve(3);
+const promise2 = new Promise((resolve, reject) => setTimeout(reject, 100, new Error('一下错误')));
+const promises = [promise1, promise2];
+
+Promise.allSettled(promises).then(function (results) {
+    console.log(results);
+});
+</script>
+</body>
+</html>

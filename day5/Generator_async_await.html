@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+<script>
+
+    function getUserFromServer() {
+        // axios.get('/getname').then
+        return new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                resolve('张三')
+            }, 3000);
+        });
+    }
+
+    function getProduct() {
+        // axios.get('/getname').then
+        return new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                resolve('鼠标')
+            }, 3000);
+        });
+    }
+
+// ----------async await---------------
+    //getUserFromServer().then
+
+    async function mainA() {
+        console.log('正在获取 姓名');
+        let name = await getUserFromServer();
+        console.log(name)
+        let product = await getProduct();
+        console.log(product);
+    }
+
+     //mainA();
+// -------------------------
+
+
+    function* mainB() {
+        // ->
+        console.log('正在获取 姓名');
+        let name = yield getUserFromServer();
+        console.log(name);
+        let product = yield getProduct();
+        console.log(product);
+    }
+
+    (function execute(g, result) {
+        let ret = g.next(result);
+        if (!ret.done) {
+            ret.value.then(function (result) {
+                execute(g, result)
+            })
+        }
+    })(mainB())
+    
+    
+
+
+    // let ret1 = g.next();
+    // console.log(ret1);
+    //
+    // ret1.value.then(function (result) {
+    //     let ret2 = g.next(result);
+    //     ret2.value.then(function (result) {
+    //         g.next(result)
+    //     });
+    // });
+
+</script>
+</body>
+</html>

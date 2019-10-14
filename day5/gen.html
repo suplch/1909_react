@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+<script>
+
+    // function* gen() {
+    //     yield 1;
+    //     yield 2;
+    //     yield 3;
+    // }
+    //
+    // let g = gen();
+    //
+    // console.log(g);
+    //
+    //
+    // // console.log(g.next())
+    // // console.log(g.next())
+    // // console.log(g.next())
+    // // console.log(g.next())
+    // // console.log(g.next())
+    //
+    // let item = g.next();
+    //
+    // while(!item.done) {
+    //     console.log(item.value);
+    //     item = g.next();
+    // }
+    //
+    // // for (let item of g) {
+    // //     console.log(item);
+    // // }
+
+
+    function* gen() {
+     // ->
+        console.log('start in gen')
+        let v1 = yield 1;
+        console.log('v1', v1, ' in gen');
+        let v2 = yield 2;
+        console.log('v2', v2, 'in gen');
+        let v3 = yield 3;
+        console.log('v3', v3, 'in gen');
+        return;
+    }
+
+    let g = gen();
+
+    // console.log(g.next());
+    // console.log(g.next('world'), ' out');
+    // console.log(g.next('good'), ' out');
+    // console.log(g.next('bye'), ' out');
+
+
+</script>
+</body>
+</html>

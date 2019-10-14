@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+
+    class ServerError extends Error{
+        constructor(code, message) {
+            super(message)
+            this.code = code;
+        }
+
+        toString() {
+            return `错误码: ${this.code}, 错误消息: ${this.message}`
+        }
+    }
+
+    function getProduct() {
+        //return axios.get('/get_product');
+        return new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                resolve({id: '111', name: '鼠标'});
+            }, 2000)
+        });
+    }
+
+    function getUserInfo() {
+        return new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                reject(new ServerError(999, '调用失败, 数据库为连接'))
+            }, 3000)
+        });
+    }
+
+    function getServerInfo() {
+        return new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                resolve({memory: '100G'})
+            }, 3000)
+        });
+    }
+
+    let p1 = new Promise(function (resolve, reject) {
+        resolve('成功了');
+    });
+
+    p1.then(function (result) {
+        console.log('a--', result);
+        return 100;
+    }).then(function (result) {
+        console.log('b--', result);
+        return getProduct().then(function (result) {
+            console.log('b111--', result);
+            return getServerInfo()
+        }).catch(function (error) {
+            console.log('b222--', error)
+        });
+    }).then(function (result) {
+        console.log('b111...000', result);
+        console.log('c--', 'hello');
+        return 300
+    }).then(function (result) {
+        console.log('d--', result);
+        return getUserInfo()
+    }).then(function (result) {
+        console.log('e--', result);
+    }).catch(function (error) {
+        console.error('f--', error.toString())
+    })
+</script>
+</body>
+</html>
