@@ -1,11 +1,9 @@
 import React from 'react';
 
 export class MyRoute extends React.Component{
-
     constructor(props) {
         super(props)
     }
-
     componentDidMount() {
         this.hashChange = () => {
             console.log('hash change')
@@ -19,9 +17,7 @@ export class MyRoute extends React.Component{
         const Component = this.props.component;
         console.log(path);
         console.log('my route', this.props)
-
         let comp;
-
         console.log(window.location.hash);
         console.log('#' + path)
 
@@ -34,7 +30,6 @@ export class MyRoute extends React.Component{
             </div>
         )
     }
-
     componentWillUnmount() {
         window.removeEventListener('hashchange', this.hashChange);
         delete this.hashChange;

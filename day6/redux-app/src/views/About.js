@@ -13,7 +13,7 @@ export class About extends React.Component{
             <div style={{border: 'solid 5px red'}}>
                 关于 本网站是一个购物电商网站
                 <Link to={ match.path + '/address'}>联系地址</Link>
-                {}
+                {/* 渲染子路由组件 */}
                 <Route path={ match.path  + '/address'} exact component={Address} />
             </div>
         )

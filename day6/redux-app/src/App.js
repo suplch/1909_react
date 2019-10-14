@@ -39,7 +39,7 @@ class App extends React.Component{
                     <Route path={'/product_detail/:id'} exact component={ProductDetail} />
                     <Route path={'/about'} component={About} />
                 </Switch>
-
+                {/* 自定义路由组件 */}
                 <MyRoute path={'/myabout'} component={MyRouteTest}  />
 
             </HashRouter>
