@@ -1,8 +1,7 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-// import App from './App';
-//
-// ReactDOM.render(<App />, document.getElementById('root'));
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+ReactDOM.render(<App/>, document.getElementById('root'));
 
 // 导入 mobx 库
 /* 例1 对类进行监听
@@ -136,6 +135,7 @@ cup.temp = -1;
 */
 
 // 例五
+/*
 import { observable, reaction } from 'mobx';
 
 const todos = observable([
@@ -149,7 +149,6 @@ const todos = observable([
     }
 ]);
 
-
 reaction(
     () => {
         return todos.length;  // 返回的结构作为 第二个 回调的参数
@@ -158,7 +157,7 @@ reaction(
         console.log(result);
         console.log(todos.map((todo) => {
             return todo.title
-        }))
+        }));
 
         if (result > 4) {
             reaction.dispose(); // 销毁 reaction
@@ -170,19 +169,16 @@ todos.push({
     title: "学习 JS",
     done: false,
 });
-
 todos.push({
     title: "学习 html",
     done: false,
 });
-
 todos.push({
     title: "学习 css",
     done: false,
 });
-
-
 todos.push({
     title: "找工作",
     done: false,
 });
+*/
