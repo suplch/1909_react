@@ -45,6 +45,7 @@ shop.productName = '🚗';   // 触发 autorun 的回调函数
 // 例二
 /*
 import { observable, autorun } from 'mobx';
+// 返回一个可观察对象
 const state = observable.object({
     price: 5,
     amount: 10,
@@ -77,7 +78,7 @@ state.total = 10000;
 /*
 import { observable, autorun } from 'mobx';
 
-let numbers = observable([5, 7, 9]);
+let numbers = observable([5, 7, 9]);  // 使得数组变成可观察对象对象
 
 autorun(() => {
     let sum = 0
@@ -101,7 +102,7 @@ class Cup {
         when(
             () => {
                 console.log('---温度 ' + this.temp);
-                return this.temp === 100
+                return this.temp === 100  // 当 返回 true , 那么第二个回调会执行
 
             },
             () => { console.log(`水开了`) }
@@ -110,7 +111,7 @@ class Cup {
         when(
             () => {
                 console.log('---温度 ' + this.temp);
-                return this.temp < 0;
+                return this.temp < 0; // 当 返回 true , 那么第二个回调会执行
             },
             () => {
                 console.log('冻住了')
@@ -134,8 +135,8 @@ cup.temp = 0;
 cup.temp = -1;
 */
 
-
-import { decorate, when, observable, reaction } from 'mobx';
+// 例五
+import { observable, reaction } from 'mobx';
 
 const todos = observable([
     {
@@ -151,7 +152,7 @@ const todos = observable([
 
 reaction(
     () => {
-        return todos.length;
+        return todos.length;  // 返回的结构作为 第二个 回调的参数
     },
     (result, reaction) => {
         console.log(result);
@@ -160,7 +161,7 @@ reaction(
         }))
 
         if (result > 4) {
-            reaction.dispose();
+            reaction.dispose(); // 销毁 reaction
         }
     }
 );
