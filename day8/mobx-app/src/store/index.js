@@ -8,6 +8,17 @@ let counterState = observable({
     Shop,
     Counter,
 });
+export function connect(WrapperComponent) {
+    return function (props) {
+        let ObserverWrapperComponent
+            = observer(WrapperComponent);
+
+        return <ObserverWrapperComponent
+            {...props}
+            counterState={counterState} />
+    }
+}
+
 
 /**
  * connect 用来包装一个组件, 给组件提供一个默认参数 counterState  表示全局状态 对象
@@ -33,9 +44,3 @@ let counterState = observable({
  * @author 张三大神
  *
  */
-export function connect(WrapperComponent) {
-    return function (props) {
-        let ObserverWrapperComponent = observer(WrapperComponent);
-        return <ObserverWrapperComponent {...props} counterState={counterState} />
-    }
-}

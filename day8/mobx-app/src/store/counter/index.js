@@ -5,7 +5,8 @@ export default {
         this.count++;
     },
     autoInc() {
-        if (this.tid) { // 如果已经存在计时器 清除 计时器
+        if (this.tid) {
+            // 如果已经存在计时器 清除 计时器
             clearInterval(this.tid);
         }
         this.tid = setInterval(() => {
